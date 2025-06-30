@@ -155,7 +155,8 @@ class Note extends FlxSprite
 							animation.addByPrefix('scroll', 'purple0');
 							animation.addByPrefix('hold', 'purple hold piece');
 							animation.addByPrefix('holdend', 'purple hold end');
-							if (frames.getByName("pruple end hold")) animation.addByPrefix("holdend", "pruple end hold");
+							if (frames.getByName("pruple end hold") != null)
+								animation.addByPrefix("holdend", "pruple end hold");
 						case 1:
 							animation.addByPrefix('scroll', 'blue0');
 							animation.addByPrefix('hold', 'blue hold piece');
