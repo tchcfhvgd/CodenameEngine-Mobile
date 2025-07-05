@@ -1286,7 +1286,7 @@ class Charter extends UIState {
 		strumlineAddButton.y = strumlineInfoBG.y;
 		strumlineLockButton.y = strumlineInfoBG.y;
 
-		strumlineLockButton.text.visible = strumlineLockButton.button.selectable = strumlineLockButton.button.visible = (strumLines.members.length != 0) ? true : false;
+		strumlineLockButton.text.visible = strumlineLockButton.button.selectable = strumlineLockButton.button.visible = strumLines.members.length > 0;
 	}
 
 	var zoom(default, set):Float = 0;
