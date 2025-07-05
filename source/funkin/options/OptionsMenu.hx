@@ -53,36 +53,24 @@ class OptionsMenu extends TreeMenu {
 			if (o.substate != null) {
 				persistentUpdate = false;
 				persistentDraw = true;
-				if (o.substate is MusicBeatSubstate) {
-					openSubState(o.substate);
-				} else {
-					openSubState(Type.createInstance(o.substate, []));
-				}
+				if (o.substate is MusicBeatSubstate) openSubState(o.substate);
+				else openSubState(Type.createInstance(o.substate, []));
 			} else {
-				if (o.state is OptionsScreen) {
-					optionsTree.add(o.state);
-				} else {
-					optionsTree.add(Type.createInstance(o.state, []));
-				}
+				if (o.state is OptionsScreen) optionsTree.add(o.state);
+				else optionsTree.add(Type.createInstance(o.state, []));
 			}
 		})]);
 
-		var xmlPath = Paths.xml("config/options");
-		for(source in [funkin.backend.assets.AssetsLibraryList.AssetSource.SOURCE, funkin.backend.assets.AssetsLibraryList.AssetSource.MODS]) {
-			if (Paths.assetsTree.existsSpecific(xmlPath, "TEXT", source)) {
-				var access:Access = null;
-				try {
-					access = new Access(Xml.parse(Paths.assetsTree.getSpecificAsset(xmlPath, "TEXT", source)));
-				} catch(e) {
-					Logs.trace('Error while parsing options.xml: ${Std.string(e)}', ERROR);
-				}
+		for (i in funkin.backend.assets.ModsFolder.getLoadedMods()) {
+			var xmlPath = Paths.xml('config/options/LIB_$i');
 
-				if (access != null)
-					for(o in parseOptionsFromXML(access))
-						main.add(o);
+			if (Paths.assetsTree.existsSpecific(xmlPath, "TEXT")) {
+				var access:Access = null;
+				try access = new Access(Xml.parse(Paths.assetsTree.getSpecificAsset(xmlPath, "TEXT")))
+				catch(e) Logs.trace('Error while parsing options.xml: ${Std.string(e)}', ERROR);
+				if (access != null) for (o in parseOptionsFromXML(access)) main.add(o);
 			}
 		}
-
 	}
 
 	public override function exit() {
