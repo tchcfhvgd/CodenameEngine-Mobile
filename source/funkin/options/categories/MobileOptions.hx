@@ -17,7 +17,7 @@ class MobileOptions extends OptionsScreen {
 	var canEnter:Bool = true;
 	#if android
 	final lastStorageType:String = Options.storageType;
-	var externalPaths:Array<String> = MobileUtil.checkExternalPaths(true);
+	var externalPaths:Array<String> = StorageUtil.checkExternalPaths(true);
 	var typeNames:Array<String> = ['Data', 'Obb', 'Media', 'External'];
 	var typeVars:Array<String> = ['EXTERNAL_DATA', 'EXTERNAL_OBB', 'EXTERNAL_MEDIA', 'EXTERNAL'];
 	#end
