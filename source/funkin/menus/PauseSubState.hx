@@ -150,10 +150,12 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			case "Resume":
 				close();
+				FlxG.mouse.visible = false;
 			case "Restart Song":
 				parentDisabler.reset();
 				game.registerSmoothTransition();
 				FlxG.resetState();
+				FlxG.mouse.visible = false;
 			case "Change Controls":
 				persistentDraw = false;
 				touchPad.active = touchPad.visible = false;
