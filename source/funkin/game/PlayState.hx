@@ -557,6 +557,7 @@ class PlayState extends MusicBeatState
 
 	@:dox(hide) override public function create()
 	{
+		#if mobile lime.system.System.allowScreenTimeout = false; #end
 		Note.__customNoteTypeExists = [];
 		// SCRIPTING & DATA INITIALIZATION
 		#if REGION
@@ -783,6 +784,15 @@ class PlayState extends MusicBeatState
 
 		startingSong = true;
 
+		addHitbox();
+		#if TOUCH_CONTROLS
+		hitbox.visible = false;
+		#end
+		#if !android
+		addTouchPad('NONE', 'P');
+		addTouchPadCamera();
+		#end
+		
 		super.create();
 
 		for(s in introSprites)
@@ -886,6 +896,9 @@ class PlayState extends MusicBeatState
 		}
 
 		startedCountdown = true;
+		#if TOUCH_CONTROLS
+		hitbox.visible = true;
+		#end
 		Conductor.songPosition = 0;
 		Conductor.songPosition -= Conductor.crochet * introLength - Conductor.songOffset;
 
@@ -982,6 +995,7 @@ class PlayState extends MusicBeatState
 
 	public override function destroy() {
 		scripts.call("destroy");
+		#if mobile lime.system.System.allowScreenTimeout = Options.screenTimeOut; #end
 		for(g in __cachedGraphics)
 			g.useCount--;
 		@:privateAccess
@@ -1055,6 +1069,7 @@ class PlayState extends MusicBeatState
 	@:dox(hide)
 	override function openSubState(SubState:FlxSubState)
 	{
+		#if mobile lime.system.System.allowScreenTimeout = Options.screenTimeOut; #end
 		var event = scripts.event("onSubstateOpen", EventManager.get(StateEvent).recycle(SubState));
 
 		if (!postCreated)
@@ -1081,6 +1096,7 @@ class PlayState extends MusicBeatState
 	@:dox(hide)
 	override function closeSubState()
 	{
+		#if mobile lime.system.System.allowScreenTimeout = false; #end
 		var event = scripts.event("onSubstateClose", EventManager.get(StateEvent).recycle(subState));
 		if (event.cancelled) return;
 
@@ -1304,7 +1320,7 @@ class PlayState extends MusicBeatState
 		while(events.length > 0 && events.last().time <= Conductor.songPosition)
 			executeEvent(events.pop());
 
-		if (controls.PAUSE && startedCountdown && canPause)
+		if ((#if android FlxG.android.justReleased.BACK || #end controls.PAUSE) && startedCountdown && canPause)
 			pauseGame();
 
 		if (generatedMusic && strumLines.members[curCameraTarget] != null) {
@@ -1507,6 +1523,9 @@ class PlayState extends MusicBeatState
 	 */
 	public function endSong():Void
 	{
+		#if TOUCH_CONTROLS
+		hitbox.visible = false;
+		#end
 		endingSong = true;
 		scripts.call("onSongEnd");
 		canPause = false;
@@ -1549,6 +1568,9 @@ class PlayState extends MusicBeatState
 	 * Immediately switches to the next song, or goes back to the Story/Freeplay menu.
 	 */
 	public function nextSong() {
+		#if TOUCH_CONTROLS
+		hitbox.visible = false;
+		#end
 		if (isStoryMode)
 		{
 			campaignScore += songScore;

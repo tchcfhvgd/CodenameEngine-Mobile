@@ -111,6 +111,9 @@ class PauseSubState extends MusicBeatSubstate
 		pauseScript.call("postCreate");
 
 		game.updateDiscordPresence();
+		
+		addTouchPad('UP_DOWN', 'A');
+		addTouchPadCamera();
 	}
 
 	override function update(elapsed:Float)
@@ -153,6 +156,7 @@ class PauseSubState extends MusicBeatSubstate
 				FlxG.resetState();
 			case "Change Controls":
 				persistentDraw = false;
+				removeTouchPad();
 				openSubState(new KeybindsOptions());
 			case "Change Options":
 				TreeMenu.lastState = PlayState;
@@ -175,6 +179,15 @@ class PauseSubState extends MusicBeatSubstate
 
 		}
 	}
+	
+	override function closeSubState() {
+		persistentUpdate = true;
+		super.closeSubState();
+		removeTouchPad();
+		addTouchPad('UP_DOWN', 'A');
+		addTouchPadCamera();
+	}
+	
 	override function destroy()
 	{
 		if(FlxG.cameras.list.contains(camera))

@@ -192,6 +192,9 @@ class KeybindsOptions extends MusicBeatSubstate {
 		FlxG.sound.volumeUpKeys = [];
 		FlxG.sound.volumeDownKeys = [];
 		FlxG.sound.muteKeys = [];
+		
+		addTouchPad('LEFT_FULL', 'A_B');
+		addTouchPadCamera();
 	}
 
 	public override function destroy() {

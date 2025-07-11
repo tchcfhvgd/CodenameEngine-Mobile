@@ -14,12 +14,25 @@ class OptionsScreen extends FlxTypedSpriteGroup<OptionType> {
 
 	public var name:String;
 	public var desc:String;
+	
+	public var dpadMode:String = 'NONE';
+	public var actionMode:String = 'NONE';
+	public var prevVPadModes:Array<String> = [];
 
-	public function new(name:String, desc:String, ?options:Array<OptionType>) {
+	public function new(name:String, desc:String, ?options:Array<OptionType>, dpadMode:String = 'NONE', actionMode:String = 'NONE') {
 		super();
 		this.name = name;
 		this.desc = desc;
 		if (options != null) for(o in options) add(o);
+		#if TOUCH_CONTROLS
+		if(MusicBeatState.getState().touchPad != null)
+			prevVPadModes = [MusicBeatState.getState().touchPad.curDPadMode, MusicBeatState.getState().touchPad.curActionMode];
+		this.dpadMode = dpadMode;
+		this.actionMode = actionMode;
+		MusicBeatState.getState().removeTouchPad();
+		MusicBeatState.getState().addTouchPad(dpadMode, actionMode);
+		MusicBeatState.getState().addTouchPadCamera();
+		#end
 	}
 
 	public override function update(elapsed:Float) {
@@ -45,19 +58,24 @@ class OptionsScreen extends FlxTypedSpriteGroup<OptionType> {
 
 		if (members.length > 0) {
 			members[curSelected].selected = true;
-			if (controls.ACCEPT || (FlxG.mouse.justReleased && Main.timeSinceFocus > 0.25))
+			if (controls.ACCEPT || ((FlxG.mouse.justReleased && !controls.touchC) && Main.timeSinceFocus > 0.25))
 				members[curSelected].onSelect();
 			if (controls.LEFT_P)
 				members[curSelected].onChangeSelection(-1);
 			if (controls.RIGHT_P)
 				members[curSelected].onChangeSelection(1);
 		}
-		if (controls.BACK || FlxG.mouse.justReleasedRight)
+		if (controls.BACK || (FlxG.mouse.justReleasedRight && !controls.touchC))
 			close();
 	}
 
 	public function close() {
 		onClose(this);
+		if(prevVPadModes.length > 0){
+			MusicBeatState.getState().removeTouchPad();
+			MusicBeatState.getState().addTouchPad(prevVPadModes[0], prevVPadModes[1]);
+			MusicBeatState.getState().addTouchPadCamera();
+		}
 	}
 
 	public function changeSelection(sel:Int, force:Bool = false) {
