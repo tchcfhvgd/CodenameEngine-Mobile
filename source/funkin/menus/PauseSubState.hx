@@ -158,7 +158,9 @@ class PauseSubState extends MusicBeatSubstate
 				FlxG.mouse.visible = false;
 			case "Change Controls":
 				persistentDraw = false;
+				#if #if TOUCH_CONTROLS
 				touchPad.active = touchPad.visible = false;
+				#end
 				openSubState(new KeybindsOptions());
 			case "Change Options":
 				TreeMenu.lastState = PlayState;
