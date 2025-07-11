@@ -127,14 +127,14 @@ class PauseSubState extends MusicBeatSubstate
 
 		if (__cancelDefault) return;
 
-		var upP = controls.UP_P #if TOUCH_CONTROLS touchPad.buttonUp.justPressed || #end;
-		var downP = controls.DOWN_P #if TOUCH_CONTROLS touchPad.buttonDown.justPressed || #end;
+		var upP = controls.UP_P #if TOUCH_CONTROLS || touchPad.buttonUp.justPressed #end;
+		var downP = controls.DOWN_P #if TOUCH_CONTROLS || touchPad.buttonDown.justPressed #end;
 		var scroll = FlxG.mouse.wheel;
 
 		if (upP || downP || scroll != 0)  // like this we wont break mods that expect a 0 change event when calling sometimes  - Nex
 			changeSelection((upP ? -1 : 0) + (downP ? 1 : 0) - scroll);
 
-		if (controls.ACCEPT #if TOUCH_CONTROLS touchPad.buttonA.justPressed || #end)
+		if (controls.ACCEPT #if TOUCH_CONTROLS || touchPad.buttonA.justPressed #end)
 			selectOption();
 	}
 
