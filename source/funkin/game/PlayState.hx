@@ -787,7 +787,7 @@ class PlayState extends MusicBeatState
 
 		addHitbox();
 		#if TOUCH_CONTROLS
-		hitbox.visible = false;
+		hitbox.visible = true;
 		#end
 		#if !android
 		addTouchPad('NONE', 'P');

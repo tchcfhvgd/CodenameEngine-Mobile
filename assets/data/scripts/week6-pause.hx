@@ -55,7 +55,17 @@ function create(event) {
 
 
 	FlxG.sound.play(Paths.sound(isThorns ? 'pixel/ANGRY' : 'pixel/clickText'));
+	
+	addTouchPad('UP_DOWN', 'A');
+	addTouchPadCamera();
 }
+
+function closeSubState() {
+		persistentUpdate = true;
+		removeTouchPad();
+		addTouchPad('UP_DOWN', 'A');
+		addTouchPadCamera();
+	}
 
 function confText(text) {
 	text.scale.set(6, 6);
@@ -85,9 +95,9 @@ function update(elapsed) {
 	hand.x -= hand.x % 6;
 	hand.y -= hand.y % 6;
 
-	changeSelection((controls.UP_P ? -1 : 0) + (controls.DOWN_P ? 1 : 0) - FlxG.mouse.wheel);
+	changeSelection(((controls.UP_P #if mobile || touchPad.buttonUp.justPressed #end) ? -1 : 0) + ((controls.DOWN_P #if mobile || touchPad.buttonDown.justPressed #end) ? 1 : 0) - FlxG.mouse.wheel);
 
-	if (controls.ACCEPT) enterOption();
+	if (controls.ACCEPT #if mobile || touchPad.buttonA.justPressed #end) enterOption();
 }
 
 var scrollSFX = FlxG.sound.load(Paths.sound(isThorns ? 'pixel/type' : 'pixel/pixelText'));
