@@ -150,15 +150,13 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			case "Resume":
 				close();
-				FlxG.mouse.visible = false;
 			case "Restart Song":
 				parentDisabler.reset();
 				game.registerSmoothTransition();
 				FlxG.resetState();
-				FlxG.mouse.visible = false;
 			case "Change Controls":
 				persistentDraw = false;
-				#if #if TOUCH_CONTROLS
+				#if TOUCH_CONTROLS
 				touchPad.active = touchPad.visible = false;
 				#end
 				openSubState(new KeybindsOptions());
@@ -194,6 +192,7 @@ class PauseSubState extends MusicBeatSubstate
 	
 	override function destroy()
 	{
+		FlxG.mouse.visible = false;
 		if(FlxG.cameras.list.contains(camera))
 			FlxG.cameras.remove(camera, true);
 		pauseScript.call("destroy");
