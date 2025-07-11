@@ -24,6 +24,7 @@ import sys.thread.Thread;
 import sys.io.File;
 #end
 import funkin.backend.assets.ModsFolder;
+import lime.system.System as LimeSystem;
 
 class Main extends Sprite
 {
