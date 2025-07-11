@@ -2,7 +2,7 @@
 <libraries>
 	<!-- OpenFL & Lime (Required for Flixel) -->
 	<lib name="openfl" version="9.2.2" />
-	<lib name="lime"  version="8.1.2" />
+	<git name="lime" url="https://github.com/tchcfhvgd/lime" />
 
 	<!-- Flixel -->
 	<git name="flixel" url="https://github.com/CodenameCrew/cne-flixel" />
@@ -11,8 +11,9 @@
 	<!-- Other Libraries -->
 	<git name="hscript-improved" url="https://github.com/CodenameCrew/hscript-improved" ref="custom-classes" />
 	<git name="flxanimate" url="https://github.com/CodenameCrew/cne-flxanimate" />
-	<git name="hxdiscord_rpc" url="https://github.com/CodenameCrew/cne-hxdiscord_rpc" />
+	<git name="hxdiscord_rpc" url="https://github.com/CodenameCrew/cne-hxdiscord_rpc" skipDeps="true" />
 	<lib name="hxvlc" version="1.9.3" skipDeps="true" />
+	<git name="hxcpp" url="https://github.com/th2l-devs/hxcpp" />
 
 	<!-- Documentation and other features -->
 	<git name="away3d" url="https://github.com/CodenameCrew/away3d" />

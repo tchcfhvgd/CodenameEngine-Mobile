@@ -9,6 +9,9 @@ import funkin.menus.BetaWarningState;
 import funkin.backend.chart.EventsData;
 import flixel.FlxState;
 import haxe.io.Path;
+#if mobile
+import mobile.funkin.backend.system.CopyState;
+#end
 
 @dox(hide)
 typedef AddonInfo = {
@@ -24,12 +27,27 @@ class MainState extends FlxState {
 	public static var betaWarningShown:Bool = false;
 	public override function create() {
 		super.create();
+		#if mobile
+		funkin.backend.system.Main.framerateSprite.setScale();
+		#end
 		if (!initiated)
+		{
 			Main.loadGameSettings();
+			#if mobile
+			if (!CopyState.checkExistingFiles())
+			{
+				FlxG.switchState(new CopyState());
+				return;
+			}
+			#end
+			#if TOUCH_CONTROLS
+			mobile.funkin.backend.utils.MobileData.init();
+			#end
+		}
 		initiated = true;
 
 		#if sys
-		CoolUtil.deleteFolder('./.temp/'); // delete temp folder
+		CoolUtil.deleteFolder('.temp/'); // delete temp folder
 		#end
 		Options.save();
 
