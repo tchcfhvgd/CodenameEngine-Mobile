@@ -49,6 +49,7 @@ class Script extends FlxBasic implements IFlxDestroyable {
 			"FlxTypeText"	   => flixel.addons.text.FlxTypeText,
 			"FlxText"		   => flixel.text.FlxText,
 			"FlxTimer"		  => flixel.util.FlxTimer,
+			"FlxEmitter"		  => flixel.effects.particles.FlxEmitter;,
 			"FlxPoint"		  => CoolUtil.getMacroAbstractClass("flixel.math.FlxPoint"),
 			"FlxAxes"		   => CoolUtil.getMacroAbstractClass("flixel.util.FlxAxes"),
 			"FlxColor"		  => CoolUtil.getMacroAbstractClass("flixel.util.FlxColor"),
