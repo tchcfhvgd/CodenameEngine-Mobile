@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <libraries>
 	<!-- OpenFL & Lime (Required for Flixel) -->
-	<git name="openfl" url="https://github.com/tchcfhvgd/openfl-9.2.2" />
+	<lib name="openfl" version="9.2.2" />
 	<git name="lime" url="https://github.com/tchcfhvgd/lime" />
 
 	<!-- Flixel -->
